@@ -10,6 +10,7 @@ display: flex;
 
 
 
+
 export default class Home extends React.Component {
     
     render () {
@@ -41,6 +42,7 @@ export default class Home extends React.Component {
                     carrinho={this.props.carrinho} 
                     clickRemover={this.props.onClickRemoverQuantidade}
                 ></Carrinho>
+
             </div>
         )
     }
