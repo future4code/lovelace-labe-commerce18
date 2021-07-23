@@ -5,7 +5,7 @@ const EstiloTabela = styled.table `
     border: 1px black solid;
     align-items: center;
     text-align: center;
-    justify-items: center;
+    justify-items: center ;
 
 `
 

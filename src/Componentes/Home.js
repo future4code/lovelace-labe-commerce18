@@ -4,8 +4,9 @@ import Carrinho from './Carrinho'
 import ContainerCards from './ContainerCards'
 
 const EstiloLista = styled.div `
-display: flex;
-
+display: grid;
+grid-template-columns:1fr 1fr 1fr;
+align-items: center;
 `
 
 

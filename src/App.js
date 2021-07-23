@@ -4,12 +4,15 @@ import './App.css';
 import Carrinho from './Componentes/Carrinho'
 import Filtro from './Componentes/Filtro';
 import Home from './Componentes/Home';
-import styled  'styled-components';
+import styled from 'styled-components';
 
 
 
+const Style = styled.div
+`
+display: flex;
 
-
+`
 
 
 
@@ -184,8 +187,10 @@ AlteraQuantidadeUmProduto = (idProduto, quantidade) => {
 }
 
   render() {
-    return (
-      <div className="App">
+    return ( 
+    <div>
+      
+            <div className="App">
 
         {/* <Home /> */}
         
@@ -206,6 +211,7 @@ AlteraQuantidadeUmProduto = (idProduto, quantidade) => {
           onClickAcrescentarProduto={this.onClickAcrescentarProduto}
           lista={this.state.listaProdutosFiltrada}
         ></Home>
+      </div>
       </div>
     );
   }
