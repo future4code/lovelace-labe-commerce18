@@ -32,7 +32,7 @@ class App extends React.Component {
         visivel: true
       },
       {id: 5,
-        descricao: "&&&&&&&&&&",
+        descricao: 'Foeguete Premiun',
         valor: 15000.00,
         urlProduto:"https://st2.depositphotos.com/2197700/9185/i/950/depositphotos_91851398-stock-photo-space-shuttle-flying-over-the.jpg",
         visivel: true
@@ -65,8 +65,8 @@ class App extends React.Component {
 //valorMinimo, valorMaximo, descricao
   filtrarRangerDescricao = (valorMinimo, valorMaximo, descricao) => {
     const novaListaProduto = this.state.listaProdutos.filter((produto) =>{
-        return ((produto.valor >= valorMinimo) === 
-                (produto.valor <= valorMaximo))
+        return ((produto.valor >= valorMinimo) && 
+                (produto.valor <= valorMaximo)) 
         
     })
     // console.log('min/max', valorMinimo, valorMaximo)
