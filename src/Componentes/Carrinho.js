@@ -6,7 +6,7 @@ const EstiloTabela = styled.table `
     display: block;
     align-items: center;
     text-align: center;
-    justify-items: center;
+    justify-items: center ;
 
 `
 class Carrinho extends React.Component {
