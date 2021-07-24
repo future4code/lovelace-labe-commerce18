@@ -1,14 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
-import Carrinho from './Carrinho'
-import ContainerCards from './ContainerCards'
+import Cards from './Cards'
 
-const EstiloLista = styled.div `
-display: flex;
 
+const EstiloContCards = styled.div `
+    border: 1px black solid;
+    padding: 5px;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    margin: 20px;
+    row-gap: 10px;
+    column-gap: 10px;
 `
-
-
 
 
 export default class Home extends React.Component {
@@ -16,17 +21,14 @@ export default class Home extends React.Component {
     render () {
         const ListarProdutos = this.props.lista.map((produto) => {
             return (
-                <EstiloLista>
-                    <ContainerCards 
+                    <Cards
                         imagem={produto.urlProduto}
                         descricao={produto.descricao}
                         valor={produto.valor}
                         id_Produto={produto.id}
-                        onClickAdd={this.props.onClickAcrescentarProduto}
-                    > 
-                    </ContainerCards>
-                </EstiloLista> 
-                
+                        onClick={this.props.onClickAcrescentarProduto}
+                    >
+                    </Cards>
             )
         })
 
@@ -34,15 +36,9 @@ export default class Home extends React.Component {
         return (
             <div>
                 <p>Home</p>
-                
+                <EstiloContCards>
                     {ListarProdutos}
-                
-                <button>adicionar</button>
-                <Carrinho 
-                    carrinho={this.props.carrinho} 
-                    clickRemover={this.props.onClickRemoverQuantidade}
-                ></Carrinho>
-
+                </EstiloContCards>
             </div>
         )
     }

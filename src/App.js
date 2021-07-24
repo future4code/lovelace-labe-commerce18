@@ -4,25 +4,17 @@ import './App.css';
 import Carrinho from './Componentes/Carrinho'
 import Filtro from './Componentes/Filtro';
 import Home from './Componentes/Home';
-import styled  'styled-components';
+import styled from 'styled-components'
 
-
-
-
-
-
-
-
-
-
-
-
+const EstiloContaine = styled.div `
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+`
 
 class App extends React.Component {
   
-  componentDidMount() {
-    this.setState({listaProdutosFiltrada: this.state.listaProdutos})
-  }
+  
 
   state = {
     listaProdutos: [
@@ -57,24 +49,39 @@ class App extends React.Component {
     inputDescricao: '',
 
     carrinho: [
-      {
-          id_produto: 1,
-          descricao: 'Produto 1',
-          precoUnitario: 35,
-          quantidade: 5
-      },
-      {
-          id_produto: 2,
-          descricao: 'Produto 2',
-          precoUnitario: 30,
-          quantidade: 3
-      }
-  ]
-
-
-
-
+      
+      // {
+      //     id_produto: 1,
+      //     descricao: 'Produto 1',
+      //     precoUnitario: 35,
+      //     quantidade: 5
+      // },
+      // {
+      //     id_produto: 2,
+      //     descricao: 'Produto 2',
+      //     precoUnitario: 30,
+      //     quantidade: 3
+      // }
+    ]
   }
+
+  componentDidMount() {
+    this.setState({listaProdutosFiltrada: this.state.listaProdutos})
+    const carrinhoString = localStorage.getItem('carrinho')
+    console.log('Carrinho lido', carrinhoString)
+    if(carrinhoString) {
+      this.setState({carrinho : JSON.parse(carrinhoString)})
+    } else {
+      this.setState({carrinho : []})
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.carrinho !== this.state.carrinho){
+      localStorage.setItem('carrinho', this.state.carrinho)
+    }
+  };
+
 //valorMinimo, valorMaximo, descricao
   filtrarRangerDescricao = (valorMinimo, valorMaximo, descricao) => {
     const novaListaProduto = this.state.listaProdutos.filter((produto) =>{
@@ -82,7 +89,6 @@ class App extends React.Component {
                 (produto.valor <= valorMaximo)) 
         
     })
-    // console.log('min/max', valorMinimo, valorMaximo)
     this.setState({listaProdutosFiltrada: novaListaProduto})
   }
   onChangeValorMinimo = (event) => {
@@ -92,7 +98,6 @@ class App extends React.Component {
   }
 
   onChangeValorMaximo = (event) => {
-    // console.log('v.maqximo', event.target.value)
     this.setState({inputValorMaximo: event.target.value})
     this.filtrarRangerDescricao(event.target.value)
   }
@@ -104,57 +109,47 @@ class App extends React.Component {
 
 
   onClickAcrescentarProduto = (event) => {
-    //event.currentTarget.id
-    const idProd = parseInt(event.currentTarget.id)
-    console.log(typeof(event.currentTarget.id))
+    
     const produtoSelecionado = this.state.carrinho.filter((produto) => {
-        console.log('id',produto.id_produto)
-        console.log(produto.id_produto === idProd)
         return produto.id_produto === parseInt(event.currentTarget.id)
     });
-    console.log('prod. seleciondo', produtoSelecionado)
+
     if (produtoSelecionado.length > 0) {
         // Aumentar Quantidade
-        this.AlteraQuantidadeUmProduto(produtoSelecionado[0].id, 
+        this.AlteraQuantidadeUmProduto(produtoSelecionado[0].id_produto, 
             produtoSelecionado[0].quantidade + 1)
     } else {
         // Adicionar Produto da lista
         const produtoCarrinho = this.state.listaProdutos.filter((produto) => {
-          return produto.id === event.currentTarget.id
+          return produto.id === parseInt(event.currentTarget.id)
         })
-        console.log('produto para o carrinho', produtoCarrinho)
-        // {
-        //     id_produto: event.currentTarget.id,
-        //     descricao: event.id,
-        //     precoUnitario: event.currentTarget.id,
-        //     quantidade: 1
-        // }
-        this.AdicionaProduto(produtoCarrinho)
+        this.AdicionaProduto(produtoCarrinho[0])
     }
 }
 
 onClickRemoverQuantidade = (event) => {
     const produtoSelecionado = this.state.carrinho.filter((produto) => {
-        return produto.id_produto === event.currentTarget.id
+        return produto.id_produto === parseInt(event.currentTarget.id)
     });
     if (produtoSelecionado[0].quantidade > 1) {
         // Diminuir quantidade
-        this.AlteraQuantidadeUmProduto(event.currentTarget.id, 
+        this.AlteraQuantidadeUmProduto(parseInt(event.currentTarget.id), 
             produtoSelecionado[0].quantidade - 1)
     } else {
         // Remover produto
-        this.RemoverProduto(event.currentTarget.id)
+        this.RemoverProduto(parseInt(event.currentTarget.id))
     }
 }
 
 AdicionaProduto = (produto) => {
+
     const novoProdutoCarrinho = {
         id_produto: produto.id,
         descricao: produto.descricao,
         precoUnitario: produto.valor,
         quantidade: 1
     }
-    console.log(novoProdutoCarrinho)
+
     const novoCarrinho = [...this.state.carrinho, novoProdutoCarrinho]
     this.setState({carrinho: novoCarrinho})
 }
@@ -185,28 +180,33 @@ AlteraQuantidadeUmProduto = (idProduto, quantidade) => {
 
   render() {
     return (
-      <div className="App">
+      <EstiloContaine>
 
         {/* <Home /> */}
         
         <Filtro
-        inputValorMinimo={this.state.inputValorMinimo}
-        onChangeValorMinimo={this.onChangeValorMinimo}
+          inputValorMinimo={this.state.inputValorMinimo}
+          onChangeValorMinimo={this.onChangeValorMinimo}
 
-        inputValorMaximo={this.state.inputValorMaximo}
-        onChangeValorMaximo={this.onChangeValorMaximo}
+          inputValorMaximo={this.state.inputValorMaximo}
+          onChangeValorMaximo={this.onChangeValorMaximo}
 
-        inputDescricao={this.state.inputDescricao}
-        onChangeDescricao={this.onChangeDescricao}
-        listaProdutosFiltrada={this.state.listaProdutosFiltrada}
+          inputDescricao={this.state.inputDescricao}
+          onChangeDescricao={this.onChangeDescricao}
+          listaProdutosFiltrada={this.state.listaProdutosFiltrada}
         />
         <Home 
           carrinho={this.state.carrinho}
-          onClickRemoverQuantidade={this.onClickRemoverQuantidade}
           onClickAcrescentarProduto={this.onClickAcrescentarProduto}
           lista={this.state.listaProdutosFiltrada}
         ></Home>
-      </div>
+
+        <Carrinho 
+            carrinho={this.state.carrinho} 
+            clickRemover={this.onClickRemoverQuantidade}
+        ></Carrinho>
+
+      </EstiloContaine>
     );
   }
 }
