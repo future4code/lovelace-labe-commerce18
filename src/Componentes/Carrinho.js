@@ -57,11 +57,13 @@ class Carrinho extends React.Component {
                     <th>Quantidade</th>
                     <th>Preço Unit.</th>
                     <th>Total</th>
-                    {!this.props.carrinho.length}
-                      {/* <div>Vazio</div>  */}
+                    
                       {ListaCarrinho}
                      
                 </EstiloTabela>
+                <EstiloMoeda>
+                   Total do carrinho: {formatoMoeda(this.props.totalCarrinho)}
+                </EstiloMoeda>
             </div>
         )
     }
