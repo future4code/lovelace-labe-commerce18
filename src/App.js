@@ -94,6 +94,17 @@ class App extends React.Component {
     }
     this.setState({listaProdutosFiltrada: novaLista})
   }
+
+  somaCarrinho = () => {
+    let total = 0
+    this.state.carrinho.map((produto) => {
+      total += ((produto.quantidade * produto.precoUnitario) * 100).toFixed(2) / 100
+      
+      
+    })
+    return total
+  }
+
   filtrarRangerDescricao = (valorMinimo, valorMaximo, descricao) => {
     if (!parseInt(valorMinimo)) {
       valorMinimo = 0
@@ -199,7 +210,7 @@ AlteraQuantidadeUmProduto = (idProduto, quantidade) => {
     this.setState ({carrinho: novoCarrinho})
 }
 quantProd = () => {
-  console.log('quant', this.state.listaProdutos.length)
+  
   return this.state.listaProdutos.length
 }
 
@@ -232,6 +243,7 @@ quantProd = () => {
         <Carrinho 
             carrinho={this.state.carrinho} 
             clickRemover={this.onClickRemoverQuantidade}
+            totalCarrinho={this.somaCarrinho()}
         ></Carrinho>
 
       </EstiloContaine>
