@@ -6,12 +6,18 @@ const EstiloCards = styled.div `
     flex-direction: column;
     border-style: solid;
     border-width: thin;
+    row-gap: 10px;
+    
     img {
         height: 80px;
+        width: 150px;
     }
     
     > button {
-        margin: 0 auto;
+        margin: 5px auto;
+    }
+    >div{
+        margin: 0 5px;
     }
 `
 

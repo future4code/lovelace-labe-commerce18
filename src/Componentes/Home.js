@@ -14,10 +14,19 @@ const EstiloContCards = styled.div `
     row-gap: 10px;
     column-gap: 10px;
 `
-
-
+const EstiloTitulo = styled.div `
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    select{
+        margin-left: 5px;
+    }
+`
 export default class Home extends React.Component {
-    
+ 
+    componentDidMount() {
+
+    }
     render () {
         const ListarProdutos = this.props.lista.map((produto) => {
             return (
@@ -31,11 +40,21 @@ export default class Home extends React.Component {
                     </Cards>
             )
         })
-
+//onChange={this.props.onChangeOrdenacao}
         
         return (
             <div>
                 <p>Home</p>
+                <EstiloTitulo>
+                    <div>Quantidade de produtos: {this.props.quantidade}</div>
+                    <div>Ordenação
+                        <select id='Selecao' onClick={this.props.onChangeOrdenacao}> 
+                            <option value='C' >Crescente</option>
+                            <option value='D' >Descrcente</option>
+                        </select>
+                    </div>
+                </EstiloTitulo>
+                
                 <EstiloContCards>
                     {ListarProdutos}
                 </EstiloContCards>
